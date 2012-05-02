@@ -81,7 +81,7 @@ default parameter values
 def i_have_a_default(a, b=1, c=True, d="string"):
     print a,b,c,d
 
-i_have_a_default(1, b=3, d="hello", c="neat?")
+i_have_a_default(1, c=3 ,b="neat?")
 
 
 
