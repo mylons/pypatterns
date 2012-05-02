@@ -2,6 +2,15 @@ __author__ = 'lyonsmr'
 import pprint
 
 
+#regular expressions
+
+import re
+cigar = "32M1I89M1D7M1D37M1D16M1I71M1I12M1I18M1I19M3S"
+matches = re.findall("([0-9]+)([A-Z]+)", cigar)
+for length, operation in matches:
+    print operation, length
+
+
 #don't do this.  creates a lot of string objects (same is true for any language)
 def join_strings_bad(list_of_strings):
     result = ''
