@@ -134,7 +134,6 @@ class BEDFile(object):
         def __init__(self, bedfile):
             self._fp = open(bedfile._filename, bedfile._mode)
         def bedlines(self, lines=""):
-            print "called"
             for line in self._fp:
                 adpt = BEDFile.LineAdapter(line)
                 yield BEDLine.Builder().ref( adpt.ref() ).start_pos( adpt.start() ).stop_pos( adpt.stop() ).build()
