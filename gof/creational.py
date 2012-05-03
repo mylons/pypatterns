@@ -1,28 +1,16 @@
 __author__ = 'lyonsmr'
 
 """ Singleton Examples"""
-class Singleton:
-    __single = None
-
-#one way
-class Singleton1(Singleton):
-    def __init__( self ):
-        if Singleton.__single:
-            raise Singleton.__single
-        #this line of code is never reached
-        #if __single already exists
-        Singleton.__single = self
 
 #another way
-class Singleton2(Singleton):
+class Singleton(object):
     def __new__(cls, *args, **kw):
-        if not hasattr(cls, '__instance__'):
-            orig = super(Singleton2, cls)
-            cls.__single = orig.__new__(cls, *args, **kw)
-        return cls.__single
+        if not hasattr(cls, 'self'):
+            cls.self = object.__new__(cls)
+        return cls.self
 
 
-class SingletonDemo(Singleton1):
+class SingletonDemo(Singleton):
     a = 1
 
 def singleton_demo():
