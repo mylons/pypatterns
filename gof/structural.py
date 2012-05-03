@@ -20,13 +20,38 @@ class SeqIO(FastQIO, BAMIO):
     #decorate by adding additional tags or something
     pass
 
+
+"""
+flyweight
+    ex:  re-use objects
+
+demo
+"""
+
+class Nucleotide(object):
+    #imagine this being a more useful class
+    def __init__(self, base):
+        self.base = base
+
+class DNA(object):
+    def __init__(self, dna_str):
+        self.nucleotides = {
+            'A':Nucleotide('A'),
+            'T':Nucleotide('T'),
+            'G':Nucleotide('G'),
+            'C':Nucleotide('C'),
+            }
+        for nucleotide in dna_str:
+            print self.nucleotides[nucleotide].base
+
 if __name__ == '__main__':
     #mixins
     s = SeqIO()
     print s.fastq()
     print s.bam()
 
-
+    #dna test
+    DNA("CCCC")
 
 
 

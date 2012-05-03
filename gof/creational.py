@@ -90,7 +90,7 @@ class BEDLine(object):
 
     class Builder(object):
         delim = "\t"
-        def __init__(self):
+        def __init__(self, reference_id="", start_position="", stop_position=""):
             #mandatory fields
             self._ref = reference_id
             self._start_pos = start_position
@@ -164,4 +164,5 @@ class BEDFile(object):
             pass
 
 if __name__ == '__main__':
+    print "hi"
 
