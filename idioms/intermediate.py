@@ -75,7 +75,7 @@ except KeyError:
 
 
 """
-default parameter values
+default parameter values, and lists of values, or a dictionary as an argument
 """
 
 def i_have_a_default(a, b=1, c=True, d="string"):
