@@ -117,7 +117,12 @@ class BEDLine(object):
         def build(self):
             self._final_tag = self.delim.join(self._final_tag)
             return BEDLine(self)
-
+"""
+BEDFile uses several patterns
+    1.  Adapter:  BEDFile.LineAdapater
+    2.  Visitor:  Reader/Writer
+    3.  Takes advantage of bedline, and bedline builder
+"""
 class BEDFile(object):
     #sort of overkill and redundant but an example none the less
     class LineAdapter(object):
