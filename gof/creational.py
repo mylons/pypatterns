@@ -130,27 +130,55 @@ class BEDFile(object):
         def stop(self):
             return self.tokens[2]
 
+    class Reader(object):
+        def __init__(self, bedfile):
+            self._fp = open(bedfile._filename, bedfile._mode)
+        def bedlines(self, lines=""):
+            print "called"
+            for line in self._fp:
+                adpt = BEDFile.LineAdapter(line)
+                yield BEDLine.Builder().ref( adpt.ref() ).start_pos( adpt.start() ).stop_pos( adpt.stop() ).build()
 
-    def __init__(self, filename):
+    class Writer(object):
+        def __init__(self, bedfile):
+            self._fp = open(bedfile._filename, bedfile._mode)
+
+        def bedlines(self, lines=""):
+            for line in lines:
+                self._fp.write(str(line)+"\n")
+
+
+    def __init__(self, filename, mode):
         self._filename = filename
+        self._mode = mode
+        self.handler = None
         try:
-            self._fp = open(filename, "r")
+            if mode.find("r") >= 0:
+                self.handler =  BEDFile.Reader(self)
+            elif mode.fine("w") >= 0:
+                self.handler = BEDFile.Writer(self)
+            else:
+                print "valid mode not entered.  no file handle established"
         except:
             #TODO change this to a logger
             print "Cannot open file %s " %  filename
 
-    def bedlines(self):
-        for line in self._fp:
-            adpt = BEDFile.LineAdapter(line)
-            yield BEDLine.Builder().ref( adpt.ref() ).start_pos( adpt.start() ).stop_pos( adpt.stop() ).build()
+    def lines(self, lines=""):
+        ret_val = self.handler.bedlines(lines)
+        if ret_val:
+            return ret_val
 
     def __exit__(self, type, value, traceback):
         try:
-            self._filename.close()
+            self.handler._fp.close()
         except:
             #we don't care if an exception is thrown
             pass
 
 if __name__ == '__main__':
-    print "hi"
+    bedfile = BEDFile("/a/bed/file", "r")
+    list_of_lines = [ line for line in bedfile.lines() ]
+    print list_of_lines[0]
+    print str(list_of_lines[0])
+
 
